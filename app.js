@@ -14,30 +14,16 @@ function showTab(n){
 document.querySelectorAll("#button-1").forEach(item => 
     item.addEventListener("click", (e) => {
         e.preventDefault();
-        if (currentTab == 1) {recc2();}
+        if (currentTab == 1) {recc();}
         showTab(++currentTab)
         }
     )
 )
 
-function recc(){
-    console.log("run")
-    if (native.value.toLowerCase() == "english" && parseInt(difficulty.value) < 3){
-        suggestion.innerText = `You should study Spanish!`
-    } else if (native.value.toLowerCase() == "english" && parseInt(difficulty.value) >= 3){
-        suggestion.innerText = `You should study Chinese!`
-    } else if (native.value.toLowerCase() == "spanish" && parseInt(difficulty.value) < 3){
-        suggestion.innerText = `Hola! You should study French!`
-    } else if (native.value.toLowerCase() == "spanish" && parseInt(difficulty.value) >= 3) {
-        suggestion.innerText = `Hola! You should study Arabic!`
-    }
-}
-
 document.querySelector("#retry").addEventListener("click", (e) => {
     e.preventDefault();
     showTab(currentTab = 0);
 })
-
 
 //// Language data
 languages = [
@@ -50,7 +36,7 @@ languages = [
         "name": "Italian",
         "en-difficulty": 1,
         "business": 1,
-        "culture": 4
+        "culture": 5
     }, {
         "name": "Spanish",
         "en-difficulty": 1,
@@ -75,7 +61,7 @@ languages = [
         "name": "Russian",
         "en-difficulty": 4,
         "business": 3,
-        "culture": 3
+        "culture": 4
     },{
         "name": "Hindi",
         "en-difficulty": 4,
@@ -95,7 +81,7 @@ languages = [
         "name": "Chinese",
         "en-difficulty": 5,
         "business": 5,
-        "culture": 3
+        "culture": 5
     },{
         "name": "Japanese",
         "en-difficulty": 5,
@@ -104,11 +90,19 @@ languages = [
     }
 ]
 
-function recc2(){
+
+
+function recc(){
     let suitability = [];
+    let prefMotivation = $("input[type=radio][name=motivation]:checked")[0].id;
+    document.querySelector("#suggestionList").innerHTML = "";
+
     languages.forEach(item => {
-        if(parseInt(difficulty.value) >= item["en-difficulty"]){
-            suitability.push(item)}
+        if (parseInt(difficulty.value) >= item["en-difficulty"] && item[prefMotivation] > 4){
+            suitability.push(item.name)}
     })
-    console.log(suitability)
+    suitability.forEach(item => {
+        document.querySelector("#suggestionList").innerHTML += `<li>${item}</li>`
+    })   
+    console.log(suitability);
 }

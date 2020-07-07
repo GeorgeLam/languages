@@ -17,3 +17,7 @@
 #difficulty-pref{
     width: 100%;
 }
+
+#suggestionList li{
+    list-style: none;
+}
